@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 const AuthService = require('../services/authServices');
 
 
-async function register(req:Request, res:Response, next:NextFunction) {
+export async function register(req:Request, res:Response, next:NextFunction) {
   
   try {
     
@@ -17,7 +17,7 @@ async function register(req:Request, res:Response, next:NextFunction) {
 }
 
 
-async function login(req:Request, res:Response) {
+export async function login(req:Request, res:Response) {
   try {
     const token = await AuthService.login(req.body);
     // res.cookie("jwt", re)
@@ -27,13 +27,9 @@ async function login(req:Request, res:Response) {
   }
 }
 
-async function logout(req:Request, res:Response) {
+export async function logout(req:Request, res:Response) {
   // Perform logout actions, e.g., invalidate the token if using JWT
   res.status(200).json({ message: 'Logged out successfully' });
 }
 
-module.exports = {
-  register,
-  login,
-  logout,
-};
+

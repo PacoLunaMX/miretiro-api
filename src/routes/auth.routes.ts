@@ -1,8 +1,7 @@
 import express from "express";
+import * as AuthController from '../controllers/auth.controller'; 
 
 const router = express.Router();
-
-const AuthController = require("../controllers/authController")
 
 
 // Register a new user
@@ -16,5 +15,5 @@ router.post("/logout", AuthController.logout)
 
 
 
-module.exports = router;
+export default router
 
