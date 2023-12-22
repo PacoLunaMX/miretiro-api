@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
+import * as UserService from '../services/userService'
 
 const router = express.Router();
 
 router.route("/").get((req: Request, res: Response) => {
 
-  res.send("Express + TypeScript Server");
+  const user = req.user
+  res.json({ user });
 
 });
 

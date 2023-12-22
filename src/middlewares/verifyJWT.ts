@@ -1,4 +1,5 @@
 import { Request, NextFunction, Response } from "express"
+import * as UserService from '../services/userService'
 import UserModel from "../models/User";
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv";
@@ -14,7 +15,8 @@ const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
     const token = authHeader.split(" ")[1];
     try {
         const decoded: any = jwt.verify(token, secretKey);
-        const user = await UserModel.findById(decoded.userId);
+        const userId = decoded.userId
+        const user = await UserService.getUserById(userId)
         if (!user) {
             return res.sendStatus(403);
         }

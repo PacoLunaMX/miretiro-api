@@ -2,12 +2,12 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import { verifyJWT } from "./middlewares/verifyJWT";
 import cors from "cors"
-
+import DBCONNECT from "./database";
 import UserRouter from './routes/users.routes'
 import AuthRouter from './routes/auth.routes'
 
 dotenv.config(); 
-
+DBCONNECT();
 
 
 const app: Express = express();
@@ -35,9 +35,10 @@ app.use(express.urlencoded({ extended: false }))
 
 
 app.use("/api/auth", AuthRouter);
-app.use("/api/", UserRouter);
 
-app.use(verifyJWT)
+// app.use(verifyJWT)
+app.use("/api/users",verifyJWT, UserRouter);
+
 app.get("/protected",(req, res)=>{
   res.send("201")
 } )
