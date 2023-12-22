@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import { verifyJWT } from "./middlewares/verifyJWT";
 import cors from "cors"
 import DBCONNECT from "./database";
+
 import UserRouter from './routes/users.routes'
 import AuthRouter from './routes/auth.routes'
+import AccountRouter from './routes/accounts.routes'
 
 dotenv.config(); 
 DBCONNECT();
@@ -37,7 +39,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use("/api/auth", AuthRouter);
 
 // app.use(verifyJWT)
-app.use("/api/users",verifyJWT, UserRouter);
+app.use("/api/users", verifyJWT, UserRouter);
+app.use("/api/accounts", verifyJWT, AccountRouter);
 
 app.get("/protected",(req, res)=>{
   res.send("201")

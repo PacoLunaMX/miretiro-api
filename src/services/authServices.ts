@@ -2,7 +2,7 @@ const UserService = require('./userService');
 const bcrypt = require('bcrypt');
 import User from '../types/User'
 import { Credentials } from '../types/Auth';
-import UserModel from '../models/User';
+
 
 const jwt = require('jsonwebtoken');
 
