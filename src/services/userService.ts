@@ -1,3 +1,4 @@
+import AccountModel from '../models/Account';
 import UserModel from '../models/User';
 import User from '../types/User';
 
@@ -45,4 +46,21 @@ export async function getUserByEmail(email: string): Promise<User> {
       throw new Error(`There is no user with the id: ${email}`, )
     }
     
+}
+
+export async function getUserBalance(userId: string):Promise<Number>{
+
+  const user = await UserModel.findById(userId)
+  if(!user){
+    throw new Error(`There is not an user with the id ${userId}`)
+  }
+  const accountsFromUser = await AccountModel.find({userId: user._id}).exec()
+  
+  if (!accountsFromUser || accountsFromUser.length === 0) {
+      return 0; 
+  }
+
+const totalBalance = accountsFromUser.reduce((sum, account) => sum + account.balance, 0);
+return totalBalance;
+
 }

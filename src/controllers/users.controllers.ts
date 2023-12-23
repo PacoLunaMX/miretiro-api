@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-const UserService = require('../services/userService');
+import * as UserServices from '../services/userService'
 
 
-async function updateUser(req:Request, res:Response, next:NextFunction) {
+export async function updateUser(req:Request, res:Response, next:NextFunction) {
   
   try {
     
-    const updatedUser = await UserService.updateUser(req.body);
+    const updatedUser = await UserServices.updateUser(req.body);
     res.status(201).json(updatedUser);
 
   } catch (error) {
@@ -16,4 +16,21 @@ async function updateUser(req:Request, res:Response, next:NextFunction) {
   }
 }
 
+
+export async function getUserBalance(req:Request, res:Response, next: NextFunction){
+
+  try {
+    const userId = req.user?._id
+    if(!userId){
+      throw new Error("Unauthorized")
+    }
+    const userBalance = await UserServices.getUserBalance(userId);
+    res.status(201).json(userBalance);
+
+  } catch (error) {
+    
+        next(error)
+
+  }
+}
 
