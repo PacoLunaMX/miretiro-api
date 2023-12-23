@@ -7,5 +7,9 @@ router.route("/").get(AccountsController.getAllAccountsFromUser);
 
 router.route("/").post(AccountsController.createAccount);
 
+router.route("/:id").put(AccountsController.updateAccount);
+
+router.route("/:id").delete(AccountsController.deleteAccount);
+
 
 export default router
