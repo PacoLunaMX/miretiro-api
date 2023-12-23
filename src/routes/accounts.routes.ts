@@ -1,15 +1,11 @@
 import express, { Request, Response } from "express";
-import * as AccountService from '../services/accountsServices'
+import * as AccountsController from '../controllers/accounts.controller'
 
 const router = express.Router();
 
-router.route("/").get((req: Request, res: Response) => {
+router.route("/").get(AccountsController.getAllAccountsFromUser);
 
-  const user = req.user
-  res.json({ user });
-
-});
-
+router.route("/").post(AccountsController.createAccount);
 
 
 export default router
