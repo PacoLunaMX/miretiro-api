@@ -1,7 +1,7 @@
 interface Transaction{
     
     _id?: string;
-    type: string;
+    type: 'deposit' | 'withdraw';
     amount:number;
     userId:string;
     accountId: string;

@@ -7,6 +7,7 @@ import DBCONNECT from "./database";
 import UserRouter from './routes/users.routes'
 import AuthRouter from './routes/auth.routes'
 import AccountRouter from './routes/accounts.routes'
+import TransactionRouter from './routes/transactions.route'
 
 dotenv.config(); 
 DBCONNECT();
@@ -38,13 +39,11 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use("/api/auth", AuthRouter);
 
-// app.use(verifyJWT)
+
 app.use("/api/users", verifyJWT, UserRouter);
 app.use("/api/accounts", verifyJWT, AccountRouter);
+app.use("/api/transactions", verifyJWT, TransactionRouter);
 
-app.get("/protected",(req, res)=>{
-  res.send("201")
-} )
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
