@@ -37,10 +37,30 @@ export async function getAllAccountsFromUser(req:Request, res: Response, next: N
 }
 
 export async function updateAccount(req:Request, res: Response, next: NextFunction){
-
+    try {
+    
+        const updatedAccount = await AccountService.updateAccount(req.body)
+        res.status(201).json({ updatedAccount });
+    
+      } catch (error) {
+        
+            next(error)
+    
+      }
 
 }
 
 export async function deleteAccount(req:Request, res:Response, next: NextFunction){
+  try {
+    const accountId = req.params._id
+
+    await AccountService.deleteAccount(accountId)
+    res.json(201)
+
+  } catch (error) {
     
+        next(error)
+
+  }
+
 }

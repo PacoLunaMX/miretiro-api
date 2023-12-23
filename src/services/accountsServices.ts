@@ -18,7 +18,16 @@ export async function createAccount(account: Account){
     return newAccount
 }
 
-export async function deleteAccount(){
+export async function deleteAccount(_id: string){
+
+    const account = await AccountModel.find({_id: _id}).exec()
+
+    if(account.length > 0 ){
+        throw new Error(`Account with the id: ${_id} does not exist`)
+    }else{
+        await AccountModel.deleteOne(account)
+    }
+
 
 }
 
@@ -29,4 +38,6 @@ export async function updateAccount(account: Account){
     return updatedAcc
 
 }
+
+
 
