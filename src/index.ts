@@ -1,14 +1,14 @@
 import express, { Express } from "express";
-
-import { verifyJWT } from "./middlewares/verifyJWT";
 import cors from "cors"
+
 import DBCONNECT from "./database";
+import { verifyJWT } from "./middlewares/verifyJWT";
+import ErrorHandler from "./middlewares/ErrorHandler";
 
 import UserRouter from './routes/users.routes'
 import AuthRouter from './routes/auth.routes'
 import AccountRouter from './routes/accounts.routes'
 import TransactionRouter from './routes/transactions.route'
-
 
 DBCONNECT();
 
@@ -41,5 +41,6 @@ app.use("/api/users", verifyJWT, UserRouter);
 app.use("/api/accounts", verifyJWT, AccountRouter);
 app.use("/api/transactions", verifyJWT, TransactionRouter);
 
+app.use(ErrorHandler)
 
 export default app; 

@@ -22,7 +22,7 @@ afterEach(async () => {
 
 
   describe("User Model", () => {
-    it("should create a user item successfully", async () => {
+    it("should create a user successfully", async () => {
       let validUser = {
         username: "example1",
         email: "test@example.com",
@@ -35,6 +35,7 @@ afterEach(async () => {
       expect(newTodo.password).toBe(validUser.password);
       expect(newTodo.email).toBe(validUser.email);
     });
+
   });
 
 
@@ -55,6 +56,21 @@ describe('User API', () => {
       expect(response.body.username).toBe(userData.username);
       expect(response.body.email).toBe(userData.email);
     });
+
+    it('should fail at register a new user', async () => {
+        const userData = {
+          username: 'testUser',
+          password: 'password123',
+        };
+    
+        const response = await request(app)
+          .post('/api/auth/register')
+          .send(userData)
+          .expect(201);
+    
+
+        
+      });
   
     it('should login a user', async () => {
       const userData = {
