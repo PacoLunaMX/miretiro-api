@@ -3,6 +3,7 @@ import TransactionModel from "../models/Transaction";
 import Transaction from "../types/Transaction";
 import AccountModel from "../models/Account";
 
+
 export async function getAllTransactionsFromUser(user_id:string): Promise<Transaction[]>{
 
     const allTransactions = await TransactionModel.find({ userId: user_id })
@@ -10,6 +11,7 @@ export async function getAllTransactionsFromUser(user_id:string): Promise<Transa
     return allTransactions
 
 }
+
 
 export async function getAllTransactionsFromAnAccount( accountId:string ): Promise<Transaction[]>{
 

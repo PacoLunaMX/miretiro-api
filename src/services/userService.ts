@@ -6,7 +6,6 @@ import User from '../types/User';
 export async function createUser(userData: User){
 
     const user = await UserModel.find({ email: userData.email }).exec();
-    console.log(user)
     
     if(user.length > 0){
       throw new Error("User already exists!")
