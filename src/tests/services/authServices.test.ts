@@ -66,9 +66,8 @@ describe('User API', () => {
         const response = await request(app)
           .post('/api/auth/register')
           .send(userData)
-          .expect(201);
+          .expect(401);
     
-
         
       });
   

@@ -11,7 +11,7 @@ export async function register(req:Request, res:Response, next:NextFunction) {
     res.status(201).json(newUser);
 
   } catch (error:any) {
-
+    console.log(error)
     const statusCode = error.statusCode || 401
     const newErr = CreateError(`${error}`, statusCode)
     

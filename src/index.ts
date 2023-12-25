@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import cors from "cors"
+const apicache = require('apicache');
 
 import DBCONNECT from "./database";
 import { verifyJWT } from "./middlewares/verifyJWT";
@@ -14,6 +15,8 @@ DBCONNECT();
 
 
 const app: Express = express();
+let cache = apicache.middleware;
+app.use(cache('2 minutes'));
 
 const corsOptions = {
 	origin: 'http://example.com',
@@ -27,6 +30,7 @@ app.options("*", (req, res, next)=>{
   res.header("Access-Control-Allow-Headers", "Authorization, Content-Length, X-Requested-With");
   res.send(200)
 })
+
 
 app.use(express.json())
 

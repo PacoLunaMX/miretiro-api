@@ -11,11 +11,6 @@ const secretKey = process.env.ACCESS_SECRET_KEY
 
 async function register(userData: User) {
   
-  const user = await UserService.getUserByEmail(userData.email)
-  if(user){
-
-    throw new Error(CreateError('User already exists in our database', 409))    
-  }
 
   try {
     const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
@@ -24,7 +19,7 @@ async function register(userData: User) {
     
   } catch (error) {
 
-    throw new Error(CreateError(`${error}`, 401))    
+    throw new Error(CreateError(`${error}`, 409))    
   }
 
 }

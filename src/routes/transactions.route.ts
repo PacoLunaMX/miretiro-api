@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route("/user/:id").get(TransactionsController.getAllTransactionsFromUser);
 
-router.route("/account/:id").get(TransactionsController.getAllTransactionsFromAnAccount);
+router.route("/account/:accountId").get(TransactionsController.getAllTransactionsFromAnAccount);
 
 router.route("/").post(TransactionsController.createTransaction);
 

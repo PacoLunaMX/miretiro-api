@@ -40,9 +40,9 @@ export async function getAllTransactionsFromAnAccount(req:Request, res: Response
 
   try {
     
-    const userId = req?.user?._id
-    if(userId){
-        const allTransactions = await TransactionsService.getAllTransactionsFromAnAccount(userId)
+    const accountId = req.params.accountId
+    if(accountId){
+        const allTransactions = await TransactionsService.getAllTransactionsFromAnAccount(accountId)
         res.status(201).json({ allTransactions });
     }
  
