@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import CreateError from "../Utils/Error";
 const AuthService = require('../services/authServices');
+import { ErrorException } from "../error-handler/error-exception";
+import { ErrorCode } from "../error-handler/error-code";
 
 
 export async function register(req:Request, res:Response, next:NextFunction) {
@@ -10,12 +11,9 @@ export async function register(req:Request, res:Response, next:NextFunction) {
     const newUser = await AuthService.register(req.body);
     res.status(201).json(newUser);
 
-  } catch (error:any) {
-    console.log(error)
-    const statusCode = error.statusCode || 401
-    const newErr = CreateError(`${error}`, statusCode)
+  } catch (error) {
     
-    next(newErr)
+    next(error)
 
   }
 }
@@ -28,10 +26,8 @@ export async function login(req:Request, res:Response, next: NextFunction) {
     res.status(200).json({ token  });
 
   } catch (error) {
-
-    const  newErr = CreateError(`${error}`, 401)
-    
-    next(newErr)
+     
+    next(error)
   }
 }
 

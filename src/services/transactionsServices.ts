@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import TransactionModel from "../models/Transaction";
 import Transaction from "../types/Transaction";
 import AccountModel from "../models/Account";
+import { ErrorCode } from "../error-handler/error-code";
+import { ErrorException } from "../error-handler/error-exception";
 
 
 export async function getAllTransactionsFromUser(user_id:string): Promise<Transaction[]>{
@@ -30,7 +32,8 @@ export async function makeTransaction(transaction: Transaction): Promise<Transac
     
     const accountFromUser = await AccountModel.findOne({ _id: transaction.accountId, userId: transaction.userId })
     if(!accountFromUser){
-        throw new Error(`There is no account from the user`)
+
+        throw new ErrorException(ErrorCode.NotFound, {message: `There is no account from the user`})
     }
 
     try {
@@ -38,7 +41,8 @@ export async function makeTransaction(transaction: Transaction): Promise<Transac
     
         if(transactionType == "withdraw"){
             if(accountFromUser.balance < transaction.amount){
-                throw new Error("The balance is not enough to make a withdraw")
+                
+                throw new ErrorException(ErrorCode.NotEnoughFunds ,{message:"The balance is not enough to make a withdraw"})
             }
     
             const newBalance = accountFromUser.balance  - transaction.amount
@@ -52,7 +56,8 @@ export async function makeTransaction(transaction: Transaction): Promise<Transac
     
     
         }else{
-            throw new Error("Transaction type not supported")
+
+            throw new ErrorException(ErrorCode.BadRequest ,{message:"Transaction type not supported"})
         }
     
         await session.commitTransaction();
@@ -78,14 +83,17 @@ export async function rollbackTransaction(_id: string){
 
     const transaction = await TransactionModel.findById(_id)
     if(!transaction){
-        throw new Error(`There isn't a transaction with the id: ${_id}`)
+        
+        throw new ErrorException(ErrorCode.NotFound ,{message:`There isn't a transaction with the id: ${_id}`})
     }
     
     const transactionType = transaction.type
     
     const accountFromUser = await AccountModel.findOne({ _id: transaction.accountId, userId: transaction.userId })
     if(!accountFromUser){
-        throw new Error(`There is no account from the user`)
+        
+        throw new ErrorException(ErrorCode.NotFound ,{message:`There is no account from the user`})
+
     }
 
     try {
@@ -98,7 +106,9 @@ export async function rollbackTransaction(_id: string){
     
         }else if(transactionType == "deposit"){
             if(accountFromUser.balance < transaction.amount){
-                throw new Error("The balance is not enough to revert the transaction")
+                
+                throw new ErrorException(ErrorCode.NotEnoughFunds ,{message:"The balance is not enough to revert the transaction"})
+                
             }
 
             const newBalance = accountFromUser.balance  -  transaction.amount
@@ -106,7 +116,8 @@ export async function rollbackTransaction(_id: string){
     
     
         }else{
-            throw new Error("Transaction type not supported")
+            
+            throw new ErrorException(ErrorCode.NotFound ,{message:`There is no account from the user`})
         }
     
         await TransactionModel.deleteOne({_id: _id}).exec()

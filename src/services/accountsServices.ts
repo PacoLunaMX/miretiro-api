@@ -1,5 +1,7 @@
 import AccountModel from "../models/Account";
 import { Account } from "../types/Account";
+import { ErrorCode } from "../error-handler/error-code";
+import { ErrorException } from "../error-handler/error-exception";
 
 
 export async function getAllAccountsFromUser(user_id:string): Promise<Account[]>{
@@ -22,7 +24,7 @@ export async function deleteAccount(_id: string){
 
     const account = await AccountModel.findOne({_id: _id}).exec()
     if(!account){
-        throw new Error(`Account with the id: ${_id} does not exist`)
+        throw new ErrorException(ErrorCode.NotFound ,{"message":`Account with the id: ${_id} does not exist`})
     }else{
         await AccountModel.deleteOne({_id: _id})
     }
@@ -43,8 +45,9 @@ export async function updateAccount(_id:string, account: Account){
         return updatedAcc
 
     }else{
-
-        throw new Error(`The account with the id does not exist`)
+        
+        throw new ErrorException(ErrorCode.NotFound ,{"message":`Account with the id: ${_id} does not exist`})
+        
 
     }
 

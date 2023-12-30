@@ -7,10 +7,11 @@ export async function createAccount(req:Request, res:Response, next:NextFunction
   try {
     
     const newAccount = await AccountService.createAccount(req.body)
+    console.log(newAccount)
     res.status(201).json({ newAccount });
 
   } catch (error) {
-    
+        console.log(error)
         next(error)
 
   }

@@ -2,7 +2,8 @@ const UserService = require('./userService');
 const bcrypt = require('bcrypt');
 import User from '../types/User'
 import { Credentials } from '../types/Auth';
-import CreateError from '../Utils/Error';
+import { ErrorException } from '../error-handler/error-exception';
+import { ErrorCode } from '../error-handler/error-code';
 
 const jwt = require('jsonwebtoken');
 
@@ -19,7 +20,7 @@ async function register(userData: User) {
     
   } catch (error) {
 
-    throw new Error(CreateError(`${error}`, 409))    
+    throw new ErrorException(ErrorCode.Unauthenticated)    
   }
 
 }
@@ -29,13 +30,13 @@ async function login(credentials: Credentials) {
   const user = await UserService.getUserByEmail(credentials.email);
   
   if (!user) {
-    throw new Error(CreateError('Invalid credentials', 401))    
+    throw new ErrorException(ErrorCode.Unauthenticated, {"message": "Invalid credentials"})  
   }
 
   const passwordMatch = await bcrypt.compare(credentials.password, user.password);
   
   if (!passwordMatch) {
-    throw new Error(CreateError('Invalid credentials', 401))
+    throw new ErrorException(ErrorCode.Unauthenticated, {"message": "Invalid credentials"})
   }
 
   const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });

@@ -1,14 +1,16 @@
 import AccountModel from '../models/Account';
 import UserModel from '../models/User';
 import User from '../types/User';
-
+import { ErrorCode } from '../error-handler/error-code';
+import { ErrorException } from '../error-handler/error-exception';
 
 export async function createUser(userData: User){
 
     const user = await UserModel.find({ email: userData.email }).exec();
     
     if(user.length > 0){
-      throw new Error("User already exists!")
+
+      throw new ErrorException(ErrorCode.BadRequest ,{message:"User already exists!"})
     }
 
     const newUser =  UserModel.create(userData)
@@ -31,7 +33,9 @@ export async function getUserById(_id: string): Promise<User> {
     if(user){
       return user
     }else{
-      throw new Error(`There is no user with the id: ${_id}`, )
+      
+      throw new ErrorException(ErrorCode.NotFound ,{message:`There is no user with the id: ${_id}`})
+      
     }
     
 }
@@ -42,7 +46,9 @@ export async function getUserByEmail(email: string): Promise<User> {
     if(user){
       return user
     }else{
-      throw new Error(`There is no user with the id: ${email}`, )
+      
+      throw new ErrorException(ErrorCode.NotFound ,{message:`There is no user with the email: ${email}`,})
+      
     }
     
 }
@@ -51,7 +57,9 @@ export async function getUserBalance(userId: string):Promise<Number>{
 
   const user = await UserModel.findById(userId)
   if(!user){
-    throw new Error(`There is not an user with the id ${userId}`)
+    
+    throw new ErrorException(ErrorCode.NotFound ,{message:`There is no user with the id: ${userId}`})
+    
   }
   const accountsFromUser = await AccountModel.find({userId: user._id}).exec()
   
