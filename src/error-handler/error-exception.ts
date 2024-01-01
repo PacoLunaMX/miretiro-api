@@ -16,6 +16,9 @@ export class ErrorException extends Error {
       case ErrorCode.NotEnoughFunds:
         this.status = 400;
         break;
+      case ErrorCode.ValidationError:
+        this.status = 400;
+        break;
       case ErrorCode.BadRequest:
         this.status = 400;
         break;

@@ -1,6 +1,6 @@
 const UserService = require('./userService');
 const bcrypt = require('bcrypt');
-import User from '../types/User'
+import { User } from '../types/User'
 import { Credentials } from '../types/Auth';
 import { ErrorException } from '../error-handler/error-exception';
 import { ErrorCode } from '../error-handler/error-code';
@@ -19,8 +19,8 @@ async function register(userData: User) {
     return await UserService.createUser({ ...userData, password: hashedPassword });
     
   } catch (error) {
-
-    throw new ErrorException(ErrorCode.Unauthenticated)    
+    
+    throw new ErrorException(ErrorCode.Unauthenticated, {"error":error})    
   }
 
 }

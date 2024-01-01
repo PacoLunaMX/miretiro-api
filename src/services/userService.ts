@@ -1,6 +1,6 @@
 import AccountModel from '../models/Account';
 import UserModel from '../models/User';
-import User from '../types/User';
+import {User} from '../types/User';
 import { ErrorCode } from '../error-handler/error-code';
 import { ErrorException } from '../error-handler/error-exception';
 

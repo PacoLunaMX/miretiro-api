@@ -5,4 +5,5 @@ export class ErrorCode {
     public static readonly AsyncError = 'AsyncError';
     public static readonly UnknownError = 'UnknownError';
     public static readonly BadRequest = 'BadRequest';
+    public static readonly ValidationError = 'ValidationError';
   }
