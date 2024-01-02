@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Transaction from '../types/Transaction'
+import {Transaction} from '../types/Transaction'
 
 const TransactionSchema = new mongoose.Schema<Transaction>({
   

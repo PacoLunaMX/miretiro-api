@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import TransactionModel from "../models/Transaction";
-import Transaction from "../types/Transaction";
+import {Transaction} from "../types/Transaction";
 import AccountModel from "../models/Account";
 import { ErrorCode } from "../error-handler/error-code";
 import { ErrorException } from "../error-handler/error-exception";
