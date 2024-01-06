@@ -3,13 +3,12 @@ import { validate } from "class-validator";
 const AuthService = require('../services/authServices');
 import { ErrorException } from "../error-handler/error-exception";
 import { ErrorCode } from "../error-handler/error-code";
-import { UserCreateDTO, UserLoginDTO } from "../types/User";
+import { UserCreateDTO, UserLoginDTO, UserOutDTOP } from "../types/User";
 import { plainToClass } from 'class-transformer';
 
 export async function register(req:Request, res:Response, next:NextFunction) {
   
   try {
-    
     const userData = plainToClass(UserCreateDTO, req.body);
     const validationResult = await validate(userData);
     

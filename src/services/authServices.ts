@@ -16,7 +16,14 @@ async function register(userData: User) {
   try {
     const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
     
-    return await UserService.createUser({ ...userData, password: hashedPassword });
+    const newUser =  await UserService.createUser({ ...userData, password: hashedPassword });
+
+    return {
+      username: newUser.username,
+      email: newUser.email,
+      _id: newUser._id,
+      createdAt: newUser.createdAt
+    }
     
   } catch (error) {
     

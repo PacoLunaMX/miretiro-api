@@ -15,8 +15,8 @@ DBCONNECT();
 
 
 const app: Express = express();
-let cache = apicache.middleware;
-app.use(cache('2 minutes'));
+// let cache = apicache.middleware;
+// app.use(cache('2 minutes'));
 
 const corsOptions = {
 	origin: 'http://example.com',

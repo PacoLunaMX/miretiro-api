@@ -107,3 +107,27 @@ export class UserLoginDTO implements Pick<User,'email' | 'password'>  {
   })
   password: string;
 }
+
+export class UserOutDTOP implements Pick<User, "email" | "username" | "createdAt">{
+  @IsEmail()
+  @MinLength(8,
+    {
+      message: 'Username must be a valid email between  8 and 40 characters',
+    })
+  @MaxLength(40,{
+      message: 'Username must be a valid email between  8 and 40 characters',
+    })
+  email: string;
+  
+  @IsString({
+    message: 'Username must be a valid string between  8 and 45 characters',
+  })
+  @MinLength(8, {
+    message: 'Username must be a valid string between  8 and 45 characters',
+  })
+  @MaxLength(45, {
+    message: 'Username must be a valid string between  8 and 45 characters',
+  })
+  username: string;
+  
+}
